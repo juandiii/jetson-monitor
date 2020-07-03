@@ -21,4 +21,5 @@ RUN chmod +x /bin/jetson-monitor
 USER jetson-monitor
 EXPOSE 38080
 
-ENTRYPOINT [ "jetson-monitor" ]
+# ENTRYPOINT [ "jetson-monitor" ]
+CMD ["jetson-monitor"]
