@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber"
 	"github.com/juandiii/jetson-monitor/api"
 	"github.com/juandiii/jetson-monitor/config"
+	"github.com/juandiii/jetson-monitor/logging"
 	"github.com/juandiii/jetson-monitor/scheduler"
 	"github.com/robfig/cron/v3"
 )
@@ -13,6 +14,8 @@ type Scheduler struct {
 }
 
 func main() {
+
+	log := logging.Logger
 
 	s := &Scheduler{
 		cron: cron.New(),
@@ -33,9 +36,13 @@ func main() {
 
 	s.cron.Start()
 
-	app := fiber.New()
+	app := fiber.New(&fiber.Settings{
+		DisableStartupMessage: true,
+	})
 
 	api.InitializeRoute(app)
+
+	log.Debugf("HTTP start :: listening port: %d", 38080)
 
 	app.Listen(38080)
 

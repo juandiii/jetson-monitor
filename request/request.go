@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/juandiii/jetson-monitor/config"
+	"github.com/juandiii/jetson-monitor/logging"
 	"github.com/juandiii/jetson-monitor/notification"
 )
 
@@ -23,6 +24,8 @@ type Request struct {
 }
 
 func RequestServer(c config.URL, ns []notification.CommandProvider) {
+	log := logging.Logger
+
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: false}
 
 	http := http.Client{
@@ -35,8 +38,8 @@ func RequestServer(c config.URL, ns []notification.CommandProvider) {
 
 	if err != nil {
 		tmpString = "[ERROR] " + c.URL + "\n"
-		fmt.Printf(ErrorColor, tmpString)
-		fmt.Println("Host Unrecheable")
+		log.Error(tmpString)
+		log.Error("Host Unrecheable")
 
 		for _, n := range ns {
 			n.SendMessage(&notification.Message{
@@ -49,12 +52,11 @@ func RequestServer(c config.URL, ns []notification.CommandProvider) {
 
 	if c.StatusCode != nil && *c.StatusCode != resp.StatusCode {
 		tmpString = "[ERROR] " + c.URL + "\n"
-		fmt.Printf(ErrorColor, tmpString)
+		log.Error(tmpString)
 		return
 	}
 
-	tmpString = "[OK] " + c.URL + "\n"
-	fmt.Printf(NoticeColor, tmpString)
+	log.Debugf("[OK] %s", c.URL)
 
 	return
 

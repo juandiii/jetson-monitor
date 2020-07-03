@@ -3,13 +3,11 @@ package telegram
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
-	"io"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/juandiii/jetson-monitor/config"
+	"github.com/juandiii/jetson-monitor/logging"
 	"github.com/juandiii/jetson-monitor/notification"
 )
 
@@ -17,6 +15,7 @@ type Telegram struct {
 	httpClient    http.Client
 	URL           string
 	TelegramToken string
+	logging.StandardLogger
 }
 
 func New(c config.URL) notification.CommandProvider {
@@ -30,6 +29,7 @@ func New(c config.URL) notification.CommandProvider {
 }
 
 func (t *Telegram) SendMessage(data *notification.Message) error {
+	log := logging.Logger
 
 	if t.TelegramToken != "" {
 		buf := new(bytes.Buffer)
@@ -42,6 +42,7 @@ func (t *Telegram) SendMessage(data *notification.Message) error {
 		req.Header.Set("Content-Type", "application/json")
 
 		if data != nil {
+			log.Debug("Sending Message to Slack")
 			res, e := t.httpClient.Do(req)
 
 			if e != nil {
@@ -50,9 +51,6 @@ func (t *Telegram) SendMessage(data *notification.Message) error {
 
 			defer res.Body.Close()
 
-			fmt.Println("response status: ", res.Status)
-
-			io.Copy(os.Stdout, res.Body)
 		}
 	}
 

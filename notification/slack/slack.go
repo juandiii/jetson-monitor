@@ -3,11 +3,11 @@ package slack
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/juandiii/jetson-monitor/config"
+	"github.com/juandiii/jetson-monitor/logging"
 	"github.com/juandiii/jetson-monitor/notification"
 )
 
@@ -29,6 +29,8 @@ func New(c config.URL) notification.CommandProvider {
 
 func (s *Slack) SendMessage(data *notification.Message) error {
 
+	log := logging.Logger
+
 	if s.SlackToken != "" {
 		buf := new(bytes.Buffer)
 		json.NewEncoder(buf).Encode(&Message{
@@ -39,6 +41,7 @@ func (s *Slack) SendMessage(data *notification.Message) error {
 		req.Header.Set("Content-Type", "application/json")
 
 		if data != nil {
+			log.Debug("Sending Message to Telegram")
 			res, e := s.httpClient.Do(req)
 
 			if e != nil {
@@ -47,7 +50,6 @@ func (s *Slack) SendMessage(data *notification.Message) error {
 
 			defer res.Body.Close()
 
-			fmt.Println("response status: ", res.Status)
 		}
 	}
 

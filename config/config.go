@@ -2,10 +2,10 @@ package config
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
+	"github.com/juandiii/jetson-monitor/logging"
 	"gopkg.in/yaml.v3"
 )
 
@@ -24,10 +24,12 @@ type ConfigAmanda struct {
 //Load Configuration
 func (c *ConfigAmanda) LoadConfig() (*ConfigAmanda, error) {
 
+	log := logging.Logger
+
 	err := ValidatePath("config.yml")
 
 	if err != nil {
-		log.Println("failed load config.yml")
+		log.Error("failed load config.yml")
 		return nil, err
 	}
 
