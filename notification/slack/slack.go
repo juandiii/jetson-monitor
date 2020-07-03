@@ -41,7 +41,7 @@ func (s *Slack) SendMessage(data *notification.Message) error {
 		req.Header.Set("Content-Type", "application/json")
 
 		if data != nil {
-			log.Debug("Sending Message to Telegram")
+			log.Debug("Sending Message to Slack")
 			res, e := s.httpClient.Do(req)
 
 			if e != nil {
