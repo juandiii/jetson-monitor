@@ -3,7 +3,7 @@ FROM golang:1.14-alpine as BUILDER
 WORKDIR /go/src/jetson-monitor
 COPY . .
 RUN go get
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-w -s" /go/bin/jetson-monitor
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/jetson-monitor
 
 FROM alpine:3.12.0
 
