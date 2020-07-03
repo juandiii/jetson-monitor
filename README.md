@@ -1,6 +1,6 @@
 # 🚨 Jetson Monitor
 
-**Jetson** is an HTTP monitoring service used to notify by various messaging platforms such as **Slack** and **Telegram**
+**Jetson** is an HTTP monitoring service used to notify by various messaging platforms such as **Slack** and **Telegram** 
 
 # ⚙️ Configuration
 
