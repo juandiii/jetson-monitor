@@ -28,10 +28,10 @@ cp config.sample.yml config.yml
 ```yml
 urls:
   - url: https://google.com/
-    status_code: 200 # Status Code successfully
-    slack_token: "" # for eg; TOKEN/TOKEN/TOKEN
-    telegram_token: "" # for eg; 12345678:token
-    scheduler: "@every 2s" # cron.guru
+    status_code: 200 
+    slack_token: ""
+    telegram_token: ""
+    scheduler: "@every 1m"
 ```
 
 # 🐋 Docker
