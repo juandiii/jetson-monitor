@@ -3,6 +3,8 @@ github.com/andybalholm/brotli v1.0.0/go.mod h1:loMXtMfwqflxFJPmdbJO0a3KNoPuLBgiu
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gofiber/fiber v1.12.2 h1:vrTtYnwdSiCoeIJillm3oXhXGBdkkiAzk2IEOH6MhZM=
 github.com/gofiber/fiber v1.12.2/go.mod h1:2tVav1oD8Pus7erL7fc7KHH8O6ZLAJJepW8xTWcA7Lk=
+github.com/gofiber/fiber v1.12.3 h1:ee7Hz/u+Mp11T3x0aUuLG8beBCxZReYllSeg0cg7TCE=
+github.com/gofiber/fiber v1.12.3/go.mod h1:e+Ur2pP2rb5xKtiHATgfQpSwBR0z9q8Mar9+XfYxpOY=
 github.com/gofiber/utils v0.0.9 h1:Bu4grjEB4zof1TtpmPCG6MeX5nGv8SaQfzaUgjkf3H8=
 github.com/gofiber/utils v0.0.9/go.mod h1:9J5aHFUIjq0XfknT4+hdSMG6/jzfaAgCu4HEbWDeBlo=
 github.com/gorilla/schema v1.1.0 h1:CamqUDOFUBqzrvxuz2vEwo8+SUdwsluFh7IlzJh30LY=

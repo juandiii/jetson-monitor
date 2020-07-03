@@ -41,7 +41,7 @@ urls:
 Run `docker`
 
 ```sh
- docker run -d --restart always -v $(pwd):/var/jetson-monitor -e LOG_LEVEL='DEBUG' jetson
+ docker run -d --restart always -v $(pwd):/var/jetson-monitor -e LOG_LEVEL='DEBUG' juandiii/jetson-monitor
 ```
 
 # 😇 Contribuition
