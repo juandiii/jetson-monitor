@@ -17,12 +17,12 @@ type URL struct {
 	Scheduler     string `yaml:"scheduler"`
 }
 
-type ConfigAmanda struct {
+type ConfigJetson struct {
 	Urls []URL `yaml:"urls"`
 }
 
 //Load Configuration
-func (c *ConfigAmanda) LoadConfig() (*ConfigAmanda, error) {
+func (c *ConfigJetson) LoadConfig() (*ConfigJetson, error) {
 
 	log := logging.Logger
 

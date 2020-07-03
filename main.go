@@ -21,7 +21,7 @@ func main() {
 		cron: cron.New(),
 	}
 
-	config := &config.ConfigAmanda{}
+	config := &config.ConfigJetson{}
 
 	config, err := config.LoadConfig()
 

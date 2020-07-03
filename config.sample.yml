@@ -1,6 +1,6 @@
 urls:
   - url: https://google.com/
-    status_code: 200 # Status Code successfully
+    status_code: 200 
     slack_token: "" # for eg; TOKEN/TOKEN/TOKEN
     telegram_token: "" # for eg; 12345678:token
-    scheduler: "@every 2s" # cron.guru
+    scheduler: "@every 2s"
