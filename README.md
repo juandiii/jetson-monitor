@@ -14,7 +14,7 @@ Configuration of Jetson
 | status_code    | Return Status Code    | No       |
 | slack_token    | Token of Slack        | Yes      |
 | telegram_token | Token of Telegram Bot | Yes      |
-| scheduler      | CronJob               | Yes      |
+| scheduler      | CronJob               | No       |
 
 # 👨🏻‍💻 Example usage
 
