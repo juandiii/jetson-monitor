@@ -15,13 +15,15 @@ type Scheduler struct {
 
 func main() {
 
-	log := logging.Logger
+	log := logging.NewLogger()
 
 	s := &Scheduler{
 		cron: cron.New(),
 	}
 
-	config := &config.ConfigJetson{}
+	config := &config.ConfigJetson{
+		Logger: log,
+	}
 
 	config, err := config.LoadConfig()
 
@@ -31,7 +33,7 @@ func main() {
 
 	for _, conf := range config.Urls {
 
-		s.cron.AddJob(conf.Scheduler, scheduler.New(conf))
+		s.cron.AddJob(conf.Scheduler, scheduler.New(conf, config))
 	}
 
 	s.cron.Start()

@@ -15,21 +15,23 @@ type Slack struct {
 	httpClient http.Client
 	URL        string
 	SlackToken string
+	Logger     *logging.StandardLogger
 }
 
-func New(c config.URL) notification.CommandProvider {
+func New(c config.URL, log *logging.StandardLogger) notification.CommandProvider {
 	return &Slack{
 		httpClient: http.Client{
 			Timeout: time.Duration(30 * time.Second),
 		},
 		URL:        "https://hooks.slack.com/services/" + c.SlackToken,
 		SlackToken: c.SlackToken,
+		Logger:     log,
 	}
 }
 
 func (s *Slack) SendMessage(data *notification.Message) error {
 
-	log := logging.Logger
+	log := s.Logger
 
 	if s.SlackToken != "" {
 		buf := new(bytes.Buffer)

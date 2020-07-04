@@ -19,17 +19,19 @@ type URL struct {
 
 type ConfigJetson struct {
 	Urls []URL `yaml:"urls"`
+
+	Logger *logging.StandardLogger
 }
 
 //Load Configuration
 func (c *ConfigJetson) LoadConfig() (*ConfigJetson, error) {
 
-	log := logging.Logger
+	// log := logging.Logger
 
 	err := ValidatePath("config.yml")
 
 	if err != nil {
-		log.Error("failed load config.yml")
+		c.Logger.Error("failed load config.yml")
 		return nil, err
 	}
 

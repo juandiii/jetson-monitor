@@ -11,20 +11,11 @@ import (
 	"github.com/juandiii/jetson-monitor/notification"
 )
 
-const (
-	InfoColor    = "\033[1;34m%s\033[0m"
-	NoticeColor  = "\033[1;36m%s\033[0m"
-	WarningColor = "\033[1;33m%s\033[0m"
-	ErrorColor   = "\033[1;31m%s\033[0m"
-	DebugColor   = "\033[0;36m%s\033[0m"
-)
-
 type Request struct {
 	http http.Client
 }
 
-func RequestServer(c config.URL, ns []notification.CommandProvider) {
-	log := logging.Logger
+func RequestServer(c config.URL, ns []notification.CommandProvider, log *logging.StandardLogger) {
 
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: false}
 
@@ -34,11 +25,8 @@ func RequestServer(c config.URL, ns []notification.CommandProvider) {
 
 	resp, err := http.Get(c.URL)
 
-	tmpString := ""
-
 	if err != nil {
-		tmpString = "[ERROR] " + c.URL + "\n"
-		log.Error(tmpString)
+		log.Errorf("%s \n", c.URL)
 		log.Error("Host Unrecheable")
 
 		for _, n := range ns {
@@ -51,8 +39,7 @@ func RequestServer(c config.URL, ns []notification.CommandProvider) {
 	}
 
 	if c.StatusCode != nil && *c.StatusCode != resp.StatusCode {
-		tmpString = "[ERROR] " + c.URL + "\n"
-		log.Error(tmpString)
+		log.Errorf("%s \n", c.URL)
 		return
 	}
 

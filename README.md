@@ -1,24 +1,26 @@
 # 🚨 Jetson Monitor
 
-**Jetson** is an HTTP monitoring service used to notify by various messaging platforms such as **Slack** and **Telegram** 
+**Jetson** is an HTTP monitoring service used to notify by various messaging platforms such as **Slack**, coming soon **Telegram**
 
 # ⚙️ Configuration
 
 Configuration of Jetson
 
-## config.yml
+## Options
 
-| Key            | Description           | Optional |
-|----------------|-----------------------|----------|
-| url            | Fetch URL of a server | No       |
-| status_code    | Return Status Code    | No       |
-| slack_token    | Token of Slack        | Yes      |
-| telegram_token | Token of Telegram Bot | Yes      |
-| scheduler      | CronJob               | No       |
+| Key            | Description           | Required  |
+|----------------|-----------------------|-----------|
+| url            | Fetch URL of a server | Yes       |
+| status_code    | Return Status Code    | Yes       |
+| slack_token    | Token of Slack        | No        |
+| scheduler      | CronJob               | Yes       |
 
 # 👨🏻‍💻 Example usage
 
-Copy a configuration sample a rename to `config.yml`.
+- Token of Slack: **12345678/12345678/12345678ABCDE**
+
+
+Copy a configuration sample and rename to `config.yml`.
 
 ```sh
 # Copy config.sample.yml
@@ -29,9 +31,12 @@ cp config.sample.yml config.yml
 urls:
   - url: https://google.com/
     status_code: 200 
-    slack_token: ""
-    telegram_token: ""
+    slack_token: "12345678/12345678/12345678ABCDE"
     scheduler: "@every 1m"
+  - url: https://yahoo.com/
+    status_code: 200 
+    slack_token: "12345678/12345678/12345678ABCDE"
+    scheduler: "*/5 * * * *" # Every 5th minute
 ```
 
 # 🐋 Docker
@@ -41,7 +46,11 @@ urls:
 Run `docker`
 
 ```sh
- docker run -d --restart always -v $(pwd):/var/jetson-monitor -e LOG_LEVEL='DEBUG' juandiii/jetson-monitor
+ docker run -d \
+  --restart always \ 
+  -v $(pwd):/var/jetson-monitor \ 
+  -e LOG_LEVEL='DEBUG' \ 
+  juandiii/jetson-monitor
 ```
 
 # 😇 Contribuition

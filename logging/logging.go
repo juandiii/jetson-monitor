@@ -10,8 +10,6 @@ var format = logging.MustStringFormatter(
 	`%{color}%{time:15:04:05} :: %{level} %{color:reset} %{message}`,
 )
 
-var Logger = NewLogger()
-
 type StandardLogger struct {
 	*logging.Logger
 }
@@ -19,9 +17,12 @@ type StandardLogger struct {
 func NewLogger() *StandardLogger {
 	var baseLogger = &logging.Logger{}
 
-	var standardLogger = &StandardLogger{baseLogger}
-	logging.SetFormatter(format)
+	backend := logging.NewLogBackend(os.Stderr, "", 0)
 
+	var standardLogger = &StandardLogger{baseLogger}
+	backendFormatter := logging.NewBackendFormatter(backend, format)
+
+	logging.SetBackend(backendFormatter)
 	logging.SetLevel(ParseLevel(os.Getenv("LOG_LEVEL")), "")
 
 	return standardLogger

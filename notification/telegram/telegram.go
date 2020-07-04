@@ -15,10 +15,10 @@ type Telegram struct {
 	httpClient    http.Client
 	URL           string
 	TelegramToken string
-	logging.StandardLogger
+	Logger        *logging.StandardLogger
 }
 
-func New(c config.URL) notification.CommandProvider {
+func New(c config.URL, log *logging.StandardLogger) notification.CommandProvider {
 	return &Telegram{
 		httpClient: http.Client{
 			Timeout: time.Duration(30 * time.Second),
@@ -29,7 +29,7 @@ func New(c config.URL) notification.CommandProvider {
 }
 
 func (t *Telegram) SendMessage(data *notification.Message) error {
-	log := logging.Logger
+	log := t.Logger
 
 	if t.TelegramToken != "" {
 		buf := new(bytes.Buffer)
