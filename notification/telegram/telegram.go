@@ -25,12 +25,11 @@ func New(c config.URL, log *logging.StandardLogger) notification.CommandProvider
 		},
 		URL:           "https://api.telegram.org/bot" + c.TelegramToken,
 		TelegramToken: c.TelegramToken,
+		Logger:        log,
 	}
 }
 
 func (t *Telegram) SendMessage(data *notification.Message) error {
-	log := t.Logger
-
 	if t.TelegramToken != "" {
 		buf := new(bytes.Buffer)
 		json.NewEncoder(buf).Encode(&SendMessage{
@@ -42,7 +41,7 @@ func (t *Telegram) SendMessage(data *notification.Message) error {
 		req.Header.Set("Content-Type", "application/json")
 
 		if data != nil {
-			log.Debug("Sending Message to Slack")
+			t.Logger.Debug("Sending Message to Slack")
 			res, e := t.httpClient.Do(req)
 
 			if e != nil {

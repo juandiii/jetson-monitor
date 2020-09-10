@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/gofiber/fiber v1.12.3
+	github.com/jpillora/backoff v1.0.0
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sirupsen/logrus v1.6.0 // indirect

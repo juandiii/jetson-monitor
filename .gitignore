@@ -19,5 +19,7 @@
 /vendor/
 /Godeps/
 
+/bin
+
 config.yml
 

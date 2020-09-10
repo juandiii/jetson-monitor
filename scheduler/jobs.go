@@ -20,7 +20,7 @@ func New(c config.URL, conf *config.ConfigJetson) cron.Job {
 		conf: c,
 		NotificationProviders: []notification.CommandProvider{
 			slack.New(c, conf.Logger),
-			// telegram.New(c),
+			// telegram.New(c, conf.Logger),
 		},
 		Logger: conf.Logger,
 	}
