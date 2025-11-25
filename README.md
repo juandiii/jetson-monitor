@@ -82,11 +82,12 @@ notifications:
 
 urls:
 	- url: https://example.com/health
-		status_code: 200
-		scheduler: "@every 1m"
+	status_code: 200
+	scheduler: "@every 1m"
 
 	- url: https://another-service.local/ready
-		scheduler: "0 */5 * * * *" # every 5 minutes
+	status_code: 200
+	scheduler: "0 */5 * * * *" # every 5 minutes
 ```
 
 Environment variables
