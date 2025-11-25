@@ -1,25 +1,31 @@
-### Go ###
-# Binaries for programs and plugins
+# Binaries and build outputs
+/bin/
+/bin-*
+/build/
+/dist/
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
-
-# Test binary, built with `go test -c`
 *.test
+coverage.out
 
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
+# Go tooling / vendored deps
+vendor/
+Godeps/
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
-
-### Go Patch ###
-/vendor/
-/Godeps/
-
-/bin
-
+# Local artifacts and runtime state
+notified_state.json
+.env
 config.yml
 
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+*.log
+
+# Docker / CI helpers that shouldn't be committed
+docker-compose.override.yml
