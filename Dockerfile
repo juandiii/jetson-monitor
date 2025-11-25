@@ -1,24 +1,42 @@
-FROM golang:1.14-alpine as BUILDER
+## Multi-stage Dockerfile with module-aware build and minimal runtime
+## Build stage
+ARG GOVERSION=1.25.4
+FROM golang:${GOVERSION}-alpine AS builder
+WORKDIR /src
 
-WORKDIR /go/src/jetson-monitor
+# Install tools needed for module downloads
+RUN apk add --no-cache git ca-certificates
+
+# Cache modules by copying go.mod and go.sum first
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy the rest of the sources and build a statically linked binary
 COPY . .
-RUN go get
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/jetson-monitor
+ARG GOOS=linux
+ARG GOARCH=amd64
+ARG CGO_ENABLED=0
+ARG LDFLAGS="-s -w"
+# Build only the main package in repository root to produce a single binary
+RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${GOOS} GOARCH=${GOARCH} \
+    go build -o /out/jetson-monitor -ldflags="${LDFLAGS}" .
 
-FROM alpine:3.12.0
+## Runtime stage: small base image with CA certs and non-root user
+FROM alpine:3.18 AS runtime
+RUN apk add --no-cache ca-certificates curl
 
-RUN apk update && \
-    apk add ca-certificates \
-    rm -rf /var/cache/apk/* && \
-    adduser -D -g '' -h /var/jetson-monitor jetson-monitor
+# non-root user for improved security
+RUN addgroup -S jetgroup && adduser -S -G jetgroup -h /home/jetson -s /sbin/nologin -u 1000 jetson
 
-VOLUME /var/jetson-monitor
-WORKDIR /var/jetson-monitor
+WORKDIR /home/jetson
+COPY --from=builder /out/jetson-monitor /usr/local/bin/jetson-monitor
+RUN chmod +x /usr/local/bin/jetson-monitor
 
-COPY --from=BUILDER /go/bin/jetson-monitor /bin/
-RUN chmod +x /bin/jetson-monitor
-
-USER jetson-monitor
+USER jetson
 EXPOSE 38080
 
-CMD ["jetson-monitor"]
+# Healthcheck uses the application's /health endpoint
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s CMD curl -fsS http://localhost:38080/health || exit 1
+
+ENTRYPOINT ["/usr/local/bin/jetson-monitor"]
+CMD []

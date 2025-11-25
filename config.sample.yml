@@ -1,6 +1,18 @@
+state_file: ""
+
+http_timeout_seconds: 5
+retry_max_tries: 10
+backoff_min_ms: 500
+backoff_max_ms: 1000
+backoff_factor: 1.4
+backoff_jitter: true
+per_attempt_timeout_seconds: 15
+
+notifications:
+  slack:
+    token: "<token>"
+
 urls:
-  - url: https://google.com/
-    status_code: 200 
-    slack_token: "" # for eg; TOKEN/TOKEN/TOKEN
-    telegram_token: "" # for eg; 12345678:token
-    scheduler: "@every 2s"
+  - url: http://example.com/health
+    status_code: 200
+    scheduler: "@every 10s"

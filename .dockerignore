@@ -1,1 +1,28 @@
-**/.git
+# Git metadata
+.git
+.gitignore
+
+# Local build outputs and binaries
+bin/
+build/
+dist/
+*.exe
+*.test
+
+# Go vendor/cache (we copy go.mod/go.sum in Dockerfile to cache modules)
+vendor/
+
+# Runtime state / secrets - prefer mounting at runtime
+notified_state.json
+.env
+config.yml
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+*.log
+
+# Docs and CI files not needed in image build context
+README.md
+.github/
